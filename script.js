@@ -1,11 +1,4 @@
 // ===========================
-// EMAILJS INITIALIZATION
-// ===========================
-
-// Initialize EmailJS with your public key
-emailjs.init("nmxZP2IdTOkScF3jZ");
-
-// ===========================
 // SMOOTH SCROLL & NAVIGATION
 // ===========================
 
@@ -51,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===========================
-    // CONTACT FORM WITH EMAILJS
+    // CONTACT FORM
     // ===========================
 
     const contactForm = document.getElementById('contactForm');
@@ -67,63 +60,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageInput = this.querySelector('textarea');
             const button = this.querySelector('button');
 
-            // Validate all fields
             if (!nameInput.value || !emailInput.value || !subjectInput.value || !messageInput.value) {
                 button.textContent = '✗ Please fill all fields';
                 button.style.background = '#ef4444';
                 setTimeout(() => {
-                    button.textContent = 'Send Message';
+                    button.textContent = 'Email Me';
                     button.style.background = '';
                 }, 2000);
                 return;
             }
 
-            // Show loading state
-            button.textContent = 'Sending...';
-            button.disabled = true;
-
-            // Prepare data for EmailJS
-            const templateParams = {
-                from_name: nameInput.value,
-                reply_to: emailInput.value,
-                subject: subjectInput.value,
-                message: messageInput.value,
-                time: new Date().toLocaleString()
-            };
-
-            // Send email using EmailJS
-            // All credentials are now configured:
-            // Public Key: nmxZP2IdTOkScF3jZ
-            // Service ID: service_4d2vjjj
-            // Template ID: template_eix2b2n
-            emailjs.send('service_4d2vjjj', 'template_eix2b2n', templateParams)
-                .then(function(response) {
-                    console.log('✓ SUCCESS! Email sent!', response.status, response.text);
-                    button.textContent = '✓ Message Sent!';
-                    button.style.background = '#06b6d4';
-
-                    // Reset form
-                    contactForm.reset();
-
-                    // Restore button after 3 seconds
-                    setTimeout(() => {
-                        button.textContent = 'Send Message';
-                        button.style.background = '';
-                        button.disabled = false;
-                    }, 3000);
-                }, function(error) {
-                    console.log('✗ FAILED to send email...', error);
-                    button.textContent = '✗ Failed to send';
-                    button.style.background = '#ef4444';
-
-                    console.error('EmailJS Error Details:', error);
-
-                    setTimeout(() => {
-                        button.textContent = 'Send Message';
-                        button.style.background = '';
-                        button.disabled = false;
-                    }, 3000);
-                });
+            const recipient = 'amitankitgupta1@gmail.com';
+            const subject = encodeURIComponent(subjectInput.value);
+            const body = encodeURIComponent(`Hello Ankit,\n\n${messageInput.value}\n\nRegards,\n${nameInput.value}\n${emailInput.value}`);
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
         });
     }
 
@@ -141,19 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, observerOptions);
-
-    // Animate skill bars
-    const skillBars = document.querySelectorAll('.skill-progress');
-    const skillObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'pulse 0.6s ease-out';
-                skillObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    skillBars.forEach(bar => skillObserver.observe(bar));
 
     // Project cards animation
     const projectCards = document.querySelectorAll('.project-card');
@@ -215,6 +152,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // CONSOLE MESSAGES
 // ===========================
 
-console.log('%c Welcome to Arun Avasthi\'s Portfolio! ', 'background: linear-gradient(135deg, #667eea 0%, #f093fb 100%); color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;');
-console.log('%c ✓ EmailJS Integration Active ', 'color: #06b6d4; font-size: 14px; font-weight: bold;');
-console.log('%c Contact form will send emails to your Gmail inbox ', 'color: #667eea; font-size: 12px;');
+console.log('%c Welcome to Ankit Gupta\'s Portfolio! ', 'background: linear-gradient(135deg, #667eea 0%, #f093fb 100%); color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;');
